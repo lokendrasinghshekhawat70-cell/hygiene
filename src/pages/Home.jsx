@@ -1,217 +1,58 @@
-import React, { useState } from "react";
+import React from "react";
+import { Link } from "react-router-dom";
 import Hero from "../components/Hero";
-import ProductSection from "../components/ProductSection";
+import ProductCard from "../components/ProductCard";
+import CategoryCard from "../components/CategoryCard";
 import VideoSection from "../components/VideoSection";
+import WhyChooseUs from "../components/WhyChooseUs";
 import Testimonials from "../components/Testimonials";
-import { categories, tips, gallery } from "../data/products";
+import { products, categories } from "../data/products";
+
+import ProductList from "../ProductList";
 
 export default function Home() {
-  const [checked, setChecked] = useState([]);
-
-  const toggleCheck = (index) => {
-    if (checked.includes(index)) {
-      setChecked(checked.filter((item) => item !== index));
-    } else {
-      setChecked([...checked, index]);
-    }
-  };
-
   return (
     <div className="home-page">
-      {/* HERO */}
+      {/* 1. 🎬 Video Hero */}
       <Hero />
 
-      {/* INTRO */}
-      <section className="intro" id="about">
-        <p className="section-label">WHY HYGIENE MATTERS</p>
+      {/* 2. 🛍️ Product List Section */}
+      <ProductList />
 
-        <h2>
-          Small habits create
-          <br />
-          <span>a healthier future.</span>
-        </h2>
-
-        <p>
-          Hygiene is more than just cleanliness. It is a daily practice
-          that helps prevent illness, protects our health and creates
-          a healthier environment for everyone.
-        </p>
-      </section>
-
-      {/* CATEGORIES */}
-      <section className="categories">
-        <div className="section-heading">
-          <div>
-            <p className="section-label">EXPLORE</p>
-            <h2>Hygiene <span>Essentials</span></h2>
-          </div>
-
-          <p>
-            Discover simple practices that can make a big difference
-            in your everyday life.
-          </p>
+      {/* 3. 📂 Categories (4 Core Categories) */}
+      <section className="categories-section" id="categories">
+        <div className="section-header text-center">
+          <span className="section-tag">CARE IN EVERY STAGE ♡</span>
+          <h2>Explore <span>Categories</span></h2>
+          <p>Healthy Women | Happy Families | A Cleaner Tomorrow</p>
         </div>
 
-        <div className="category-grid">
-          {categories.map((category, index) => (
-            <div className="category-card" key={index}>
-              <div className="category-icon">{category.icon}</div>
-              <h3>{category.title}</h3>
-              <p>{category.text}</p>
-              <a href="#tips">Learn more →</a>
-            </div>
+        <div className="categories-grid">
+          {categories.map((category) => (
+            <CategoryCard key={category.id} category={category} />
           ))}
         </div>
       </section>
 
-      {/* VIDEO SECTION */}
-      <VideoSection />
-
-      {/* PRODUCTS SHOWCASE */}
-      <ProductSection limit={4} title="Featured Products." />
-
-      {/* DAILY TIPS */}
-      <section className="tips-section" id="tips">
-        <div className="tips-image">
-          <img
-            src="/images/oral-hygiene.jpg"
-            alt="Hygiene products"
+      {/* 4. 📇 Official Brand Banner Showcase */}
+      <section className="banner-showcase-section">
+        <div className="banner-card-wrapper">
+          <img 
+            src="/images/deevora-banner.jpg" 
+            alt="Deevora Hygiene - Azhiva Care in Every Stage"
+            className="brand-visiting-banner" 
           />
         </div>
-
-        <div className="tips-content">
-          <p className="section-label">DAILY HABITS</p>
-
-          <h2>
-            Simple tips.
-            <br />
-            <span>Big impact.</span>
-          </h2>
-
-          <p>
-            Make these simple hygiene habits part of your everyday routine.
-          </p>
-
-          <div className="tip-list">
-            {tips.map((tip, index) => (
-              <div className="tip" key={index}>
-                <span className="check">✓</span>
-                <p>{tip}</p>
-              </div>
-            ))}
-          </div>
-        </div>
       </section>
 
-      {/* GALLERY */}
-      <section className="gallery-section" id="gallery">
-        <div className="gallery-heading text-center">
-          <p className="section-label">VISUAL STORIES</p>
-          <h2>Healthy living <span>in pictures.</span></h2>
-        </div>
+      {/* 5. 🎥 Video Showcase */}
+      <VideoSection />
 
-        <div className="gallery-grid">
-          {gallery.map((item, index) => (
-            <div className="gallery-item" key={index}>
-              <img src={item.image} alt={item.title} />
-              <div className="gallery-caption">
-                <span>{item.title}</span>
-                <b>↗</b>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
+      {/* 6. ⭐ Why Choose Us */}
+      <WhyChooseUs />
 
-      {/* CHECKLIST */}
-      <section className="checklist-section" id="checklist">
-        <div className="checklist-card">
-          <div>
-            <p className="section-label">YOUR DAILY ROUTINE</p>
-
-            <h2>
-              My Hygiene
-              <br />
-              <span>Checklist</span>
-            </h2>
-
-            <p>
-              Complete your daily hygiene habits and build
-              a healthier routine.
-            </p>
-          </div>
-
-          <div className="checklist">
-            {[
-              "Brush your teeth (2 mins)",
-              "Take a refreshing bath",
-              "Wash hands with soap",
-              "Wear clean clothes",
-              "Drink 8 glasses of pure water",
-              "Keep your living space clean",
-            ].map((item, index) => (
-              <label className="check-item" key={index}>
-                <input
-                  type="checkbox"
-                  checked={checked.includes(index)}
-                  onChange={() => toggleCheck(index)}
-                />
-
-                <span className="custom-check">
-                  {checked.includes(index) ? "✓" : ""}
-                </span>
-
-                <span
-                  className={
-                    checked.includes(index) ? "completed" : ""
-                  }
-                >
-                  {item}
-                </span>
-              </label>
-            ))}
-          </div>
-
-          <div className="progress">
-            <div>
-              <span>Today's progress</span>
-              <strong>
-                {checked.length}/6 completed
-              </strong>
-            </div>
-
-            <div className="progress-bar">
-              <div
-                style={{
-                  width: `${(checked.length / 6) * 100}%`,
-                }}
-              ></div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* TESTIMONIALS */}
+      {/* 7. ❤️ Customer Reviews */}
       <Testimonials />
-
-      {/* CTA */}
-      <section className="cta">
-        <p className="section-label">MAKE IT A HABIT</p>
-
-        <h2>
-          Clean today.
-          <br />
-          <span>Healthy tomorrow.</span>
-        </h2>
-
-        <p>
-          Start with one small habit and make it part of your everyday life.
-        </p>
-
-        <a href="#checklist" className="primary-btn">
-          Start My Checklist →
-        </a>
-      </section>
     </div>
   );
 }

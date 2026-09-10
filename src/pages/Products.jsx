@@ -52,9 +52,9 @@ export default function Products() {
   return (
     <div className="products-page">
       <div className="page-hero">
-        <span className="section-tag">PREMIUM COLLECTION</span>
-        <h1>Hygiene <span>Products</span></h1>
-        <p>Explore our certified medical and home hygiene essentials designed for everyday pure living.</p>
+        <span className="section-tag">AZHIVA HYGIENE COLLECTION</span>
+        <h1>Azhiva <span>Products</span></h1>
+        <p>Care in Every Stage ♡ • Certified dermatological protection for mothers, infants, and everyday freshness.</p>
       </div>
 
       <div className="catalog-container">
@@ -64,7 +64,7 @@ export default function Products() {
             <span>🔍</span>
             <input
               type="text"
-              placeholder="Search products (e.g. sanitizer, floor cleaner, wipes)..."
+              placeholder="Search Azhiva products (e.g. sanitary pads, diaper, wipes, roll on)..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
@@ -104,7 +104,7 @@ export default function Products() {
           </div>
         ) : (
           <div className="empty-state">
-            <p className="empty-icon">🍃</p>
+            <p className="empty-icon">🌸</p>
             <h3>No products found</h3>
             <p>Try clearing your search or picking another category.</p>
             <button

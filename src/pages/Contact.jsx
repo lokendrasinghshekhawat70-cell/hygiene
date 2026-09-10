@@ -1,135 +1,132 @@
 import React, { useState } from "react";
+import "../ContactForm.css";
 
 export default function Contact() {
-  const [formData, setFormData] = useState({
+  const [form, setForm] = useState({
     name: "",
     email: "",
-    subject: "Product Inquiry",
-    message: ""
+    query: "",
   });
-  const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleChange = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const sendWhatsApp = (e) => {
     e.preventDefault();
-    setSubmitted(true);
+
+    const phoneNumber = "918800570023"; // Managing Director Digvijay Singh Rathore
+
+    const message = `Hello Deevora Hygiene,
+
+Name: ${form.name}
+Gmail: ${form.email}
+
+Query:
+${form.query}`;
+
+    const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
+      message
+    )}`;
+
+    window.open(whatsappURL, "_blank");
   };
 
   return (
     <div className="contact-page">
       <div className="page-hero">
-        <p className="section-label">GET IN TOUCH</p>
-        <h1>Contact <span>Us</span></h1>
-        <p>Have questions about our products, bulk orders, or wellness workshops? We're here to help.</p>
+        <span className="section-tag">GET IN TOUCH</span>
+        <h1>Contact <span>Deevora Hygiene</span></h1>
+        <p>Care in Every Stage ♡ • Healthy Women | Happy Families | A Cleaner Tomorrow. Send your query directly to our WhatsApp.</p>
       </div>
 
       <div className="contact-content-grid">
-        {/* Contact Form */}
-        <div className="contact-card">
-          <h2>Send Us a Message</h2>
-          <p>Fill out the form below and our health & wellness team will respond within 24 hours.</p>
+        {/* Contact Form for WhatsApp */}
+        <div className="contact-form" style={{ margin: 0, width: "100%", maxWidth: "100%" }}>
+          <h2>Send Your Query</h2>
 
-          {submitted ? (
-            <div className="form-success-box">
-              <span className="success-icon">✓</span>
-              <h3>Thank you, {formData.name}!</h3>
-              <p>Your message has been received. Our team will contact you at <strong>{formData.email}</strong> shortly.</p>
-              <button className="primary-btn" onClick={() => setSubmitted(false)}>
-                Send Another Message
-              </button>
-            </div>
-          ) : (
-            <form onSubmit={handleSubmit} className="contact-form">
-              <div className="form-group">
-                <label>Full Name</label>
-                <input
-                  type="text"
-                  required
-                  placeholder="e.g. Rahul Sharma"
-                  value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                />
-              </div>
+          <form onSubmit={sendWhatsApp}>
+            <input
+              type="text"
+              name="name"
+              placeholder="Enter your name"
+              value={form.name}
+              onChange={handleChange}
+              required
+            />
 
-              <div className="form-group">
-                <label>Email Address</label>
-                <input
-                  type="email"
-                  required
-                  placeholder="name@example.com"
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                />
-              </div>
+            <input
+              type="email"
+              name="email"
+              placeholder="Enter your Gmail"
+              value={form.email}
+              onChange={handleChange}
+              required
+            />
 
-              <div className="form-group">
-                <label>Inquiry Type</label>
-                <select
-                  value={formData.subject}
-                  onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                >
-                  <option value="Product Inquiry">Product Inquiry & Ingredients</option>
-                  <option value="Order Support">Order & Shipping Support</option>
-                  <option value="Bulk Orders">Institutional & Bulk Orders</option>
-                  <option value="Workshops">Community Hygiene Workshops</option>
-                </select>
-              </div>
+            <textarea
+              name="query"
+              placeholder="Enter your query"
+              value={form.query}
+              onChange={handleChange}
+              required
+            ></textarea>
 
-              <div className="form-group">
-                <label>Your Message</label>
-                <textarea
-                  rows="5"
-                  required
-                  placeholder="How can we assist you today?"
-                  value={formData.message}
-                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                ></textarea>
-              </div>
-
-              <button type="submit" className="primary-btn submit-btn">
-                Send Message →
-              </button>
-            </form>
-          )}
+            <button type="submit">
+              Send Query on WhatsApp →
+            </button>
+          </form>
         </div>
 
-        {/* Contact Info Sidebar */}
+        {/* Contact Info Sidebar with Visiting Card Details */}
         <div className="contact-sidebar">
-          <div className="info-card">
-            <span className="info-icon">📍</span>
-            <div>
-              <strong>Headquarters</strong>
-              <p>Hygienica Wellness Hub, 42 Greenview Avenue, Sector 18, Bangalore, India</p>
+          <div className="visiting-card-container">
+            <div className="visiting-card-header">
+              <span className="card-badge">OFFICIAL DETAILS</span>
+              <span className="gstin-pill">GSTIN: 23AAMCD9263H1ZE</span>
             </div>
-          </div>
 
-          <div className="info-card">
-            <span className="info-icon">📞</span>
-            <div>
-              <strong>Customer Care Helpline</strong>
-              <p>+91 (800) 494-4364</p>
-              <small>Mon - Sat: 9:00 AM - 7:00 PM IST</small>
+            <div className="card-brand-title">
+              <h3>Deevora<sup>®</sup> Hygiene</h3>
+              <span className="card-sub">— PRIVATE LIMITED —</span>
+              <p className="card-tagline">Quality Hygiene Products for a Healthier You • Care in Every Stage ♡</p>
             </div>
-          </div>
 
-          <div className="info-card">
-            <span className="info-icon">✉️</span>
-            <div>
-              <strong>Email Inquiries</strong>
-              <p>support@hygienica.health</p>
-              <small>Typical response time &lt; 4 hours</small>
+            <div className="directors-list">
+              <h4>Managing Directors</h4>
+
+              <div className="director-item">
+                <div className="dir-icon">👤</div>
+                <div className="dir-details">
+                  <strong>Digvijay Singh Rathore</strong>
+                  <a href="tel:8800570023" className="dir-phone-link">
+                    <span>📞</span> 8800570023
+                  </a>
+                </div>
+              </div>
+
+              <div className="director-item">
+                <div className="dir-icon">👤</div>
+                <div className="dir-details">
+                  <strong>Vijendra Kushwah</strong>
+                  <a href="tel:9685024074" className="dir-phone-link">
+                    <span>📞</span> 9685024074
+                  </a>
+                </div>
+              </div>
             </div>
-          </div>
 
-          <div className="faq-mini-box">
-            <h4>Frequently Asked Questions</h4>
-            <details>
-              <summary>Are Hygienica products safe for kids?</summary>
-              <p>Yes, all our formulations are hypoallergenic, dermatologist tested, and free from toxic chemicals.</p>
-            </details>
-            <details>
-              <summary>What is your shipping policy?</summary>
-              <p>We deliver nationwide across India with free shipping on all orders above ₹499.</p>
-            </details>
+            <div className="quick-call-actions">
+              <a href="tel:8800570023" className="call-now-btn">
+                Call Digvijay Singh (8800570023)
+              </a>
+              <a href="tel:9685024074" className="call-now-btn outline-btn">
+                Call Vijendra Kushwah (9685024074)
+              </a>
+            </div>
           </div>
         </div>
       </div>

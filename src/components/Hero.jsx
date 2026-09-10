@@ -18,24 +18,24 @@ export default function Hero() {
       <div className="hero-overlay"></div>
 
       <div className="hero-content">
-        <span>PREMIUM HYGIENE</span>
+        <span>CARE IN EVERY STAGE ♡</span>
 
         <h1>
           Pure Hygiene.
           <br />
-          Better Living.
+          For A Healthier You.
         </h1>
 
         <p>
-          Premium hygiene products designed for a cleaner and healthier lifestyle.
+          Healthy Women | Happy Families | A Cleaner Tomorrow. Discover our certified Azhiva Sanitary Pads, Baby Diapers, Refreshing Wet Wipes, and Period Pain Relief Roll On.
         </p>
 
         <div className="hero-buttons">
-          <Link to="/products" className="hero-btn-solid">
-            Shop Products
+          <Link to="/products">
+            <button>Shop Azhiva Products</button>
           </Link>
-          <a href="#categories" className="outline">
-            Explore Collection
+          <a href="#categories">
+            <button className="outline">Explore Categories</button>
           </a>
         </div>
       </div>

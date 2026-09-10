@@ -51,8 +51,11 @@ export default function ProductDetails() {
 
         {/* Right: Info & Actions */}
         <div className="detail-info-box">
-          <p className="product-category">{product.category.toUpperCase()}</p>
+          <p className="product-category">AZHIVA • {product.category.toUpperCase()}</p>
           <h1>{product.name}</h1>
+          {product.tagline && (
+            <p className="detail-tagline-highlight">{product.tagline}</p>
+          )}
 
           <div className="rating-row">
             <span className="stars">★★★★★</span>

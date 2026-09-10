@@ -23,7 +23,7 @@ export default function Contact() {
     const message = `Hello Deevora Hygiene,
 
 Name: ${form.name}
-Gmail: ${form.email}
+Email: ${form.email}
 
 Query:
 ${form.query}`;
@@ -61,7 +61,7 @@ ${form.query}`;
             <input
               type="email"
               name="email"
-              placeholder="Enter your Gmail"
+              placeholder="Enter your Email"
               value={form.email}
               onChange={handleChange}
               required
@@ -76,7 +76,7 @@ ${form.query}`;
             ></textarea>
 
             <button type="submit">
-              Send Query on WhatsApp →
+              💬 Send Query on WhatsApp →
             </button>
           </form>
         </div>

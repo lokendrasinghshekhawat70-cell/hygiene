@@ -1,0 +1,294 @@
+.footer {
+  background: linear-gradient(135deg,
+      #061b55,
+      #003f91,
+      #006dcc);
+
+  color: white;
+  width: 100%;
+  font-family: Arial, sans-serif;
+}
+
+
+/* =========================
+   TOP FOOTER
+========================= */
+
+.footer-top {
+  display: grid;
+  grid-template-columns: 1.5fr 2fr 1fr;
+  gap: 40px;
+  padding: 55px 8%;
+  align-items: center;
+}
+
+
+/* Company */
+
+.footer-company {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-logo-img {
+  height: 68px;
+  width: auto;
+  max-width: 260px;
+  object-fit: contain;
+  margin-bottom: 16px;
+  background: #ffffff;
+  padding: 8px 14px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  display: inline-block;
+  align-self: flex-start;
+}
+
+.footer-company h2 {
+  font-size: 48px;
+  margin: 0;
+  color: white;
+}
+
+.footer-company h3 {
+  font-size: 32px;
+  margin: 0;
+  color: #69c8ff;
+}
+
+.footer-company p {
+  font-size: 18px;
+  letter-spacing: 5px;
+  margin: 10px 0 20px;
+}
+
+.footer-company span {
+  color: #ffb6ed;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+
+/* =========================
+   MANAGERS
+========================= */
+
+.footer-managers {
+  border-left: 1px solid rgba(255, 255, 255, 0.4);
+  padding-left: 40px;
+}
+
+.footer-managers h2 {
+  font-size: 27px;
+  margin-bottom: 25px;
+}
+
+.manager {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 22px;
+}
+
+.phone-icon {
+  width: 48px;
+  height: 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+  background: #0879dc;
+
+  font-size: 23px;
+}
+
+.manager h3 {
+  margin: 0 0 5px;
+  font-size: 18px;
+}
+
+.manager a {
+  color: white;
+  text-decoration: none;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.manager a:hover {
+  color: #ffb6ed;
+}
+
+
+/* =========================
+   GST
+========================= */
+
+.footer-gst {
+  text-align: right;
+}
+
+.footer-gst h3 {
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+.footer-gst p {
+  font-size: 17px;
+  font-weight: bold;
+}
+
+
+/* =========================
+   PRODUCTS
+========================= */
+
+.footer-products {
+  border-top: 2px solid rgba(255, 255, 255, 0.25);
+
+  display: grid;
+  grid-template-columns: 2fr repeat(4, 1fr);
+
+  padding: 35px 7%;
+  gap: 25px;
+
+  background: rgba(0, 0, 0, 0.15);
+}
+
+
+.footer-tagline {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.footer-tagline h2 {
+  margin: 3px 0;
+  font-size: 25px;
+}
+
+
+/* Product */
+
+.product-item {
+  text-align: center;
+
+  border-left: 1px solid rgba(255, 255, 255, 0.25);
+
+  padding-left: 15px;
+}
+
+.product-icon {
+  width: 60px;
+  height: 60px;
+
+  margin: auto;
+
+  border-radius: 50%;
+
+  background: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 28px;
+}
+
+.product-item h3 {
+  font-size: 16px;
+  margin: 12px 0 5px;
+}
+
+.product-item p {
+  margin: 0;
+  font-size: 13px;
+  color: #dcecff;
+}
+
+
+/* =========================
+   BOTTOM
+========================= */
+
+.footer-bottom {
+  text-align: center;
+
+  padding: 18px;
+
+  background: #04143f;
+}
+
+.footer-bottom p {
+  margin: 0;
+  font-size: 14px;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 900px) {
+
+  .footer-top {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .footer-logo-img {
+    align-self: center;
+  }
+
+  .footer-managers {
+    border-left: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+    padding-left: 0;
+    padding-top: 30px;
+  }
+
+  .manager {
+    justify-content: center;
+  }
+
+  .footer-gst {
+    text-align: center;
+  }
+
+  .footer-products {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .footer-tagline {
+    grid-column: 1 / -1;
+    text-align: center;
+  }
+}
+
+
+@media (max-width: 550px) {
+
+  .footer-top {
+    padding: 40px 20px;
+  }
+
+  .footer-company h2 {
+    font-size: 38px;
+  }
+
+  .footer-company h3 {
+    font-size: 27px;
+  }
+
+  .footer-products {
+    grid-template-columns: 1fr;
+  }
+
+  .product-item {
+    border-left: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 20px 0;
+  }
+
+}

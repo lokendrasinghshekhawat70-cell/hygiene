@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
+import emailjs from "@emailjs/browser";
+import Footer from "./Footer";
 import "./App.css";
 
 const products = [
@@ -63,6 +65,35 @@ function App() {
   const [cartOpen, setCartOpen] = useState(false);
   const [checkoutOpen, setCheckoutOpen] = useState(false);
 
+  // EmailJS form reference
+  const contactFormRef = useRef();
+
+  // Contact form state
+  const [contactForm, setContactForm] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    query: "",
+  });
+
+  // Checkout form state
+  const [checkoutForm, setCheckoutForm] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    query: "",
+  });
+
+  // Toast notification state
+  const [toastMessage, setToastMessage] = useState("");
+
+  const showToast = (msg) => {
+    setToastMessage(msg);
+    setTimeout(() => {
+      setToastMessage("");
+    }, 2800);
+  };
+
   // ADD TO CART
   const addToCart = (product) => {
     const existing = cart.find((item) => item.id === product.id);
@@ -79,6 +110,7 @@ function App() {
       setCart([...cart, { ...product, quantity: 1 }]);
     }
 
+    showToast(`✓ Added "${product.name}" to cart!`);
     setCartOpen(true);
   };
 
@@ -135,8 +167,8 @@ function App() {
     return matchSearch && matchCategory;
   });
 
-  // WHATSAPP
-  const sendWhatsApp = () => {
+  // WHATSAPP CART ORDER
+  const sendWhatsApp = (customDetails = null) => {
     if (cart.length === 0) {
       alert("Please add a product to cart first.");
       return;
@@ -157,8 +189,19 @@ Price: ₹${item.price * item.quantity}
     });
 
     message += `Total: ₹${cartTotal}
+`;
 
-Please contact me regarding this order.`;
+    if (customDetails) {
+      message += `
+Customer Details:
+Name: ${customDetails.name}
+Gmail: ${customDetails.email}
+Mobile: +91 ${customDetails.phone}
+Address / Note: ${customDetails.query}
+`;
+    }
+
+    message += `\nPlease contact me regarding this order.`;
 
     const phone = "918800570023";
 
@@ -169,6 +212,38 @@ Please contact me regarding this order.`;
     window.open(url, "_blank");
   };
 
+  // HANDLE CONTACT SUBMISSION
+  const handleContactSubmit = (e) => {
+    e.preventDefault();
+
+    if (contactForm.phone.length !== 10) {
+      alert("Please enter a valid 10-digit Indian mobile number.");
+      return;
+    }
+
+    const message = `
+Hello Deevora Hygiene,
+
+New Query - Deevora Hygiene:
+
+Name: ${contactForm.name}
+Gmail: ${contactForm.email}
+Mobile: +91 ${contactForm.phone}
+
+Query:
+${contactForm.query}
+
+Thank you!
+    `;
+
+    const whatsappNumber = "918800570023";
+    const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
+      message
+    )}`;
+
+    window.open(whatsappURL, "_blank");
+  };
+
   return (
     <div className="app">
 
@@ -176,20 +251,19 @@ Please contact me regarding this order.`;
 
       <nav className="navbar">
 
-        <div className="logo">
-          <div className="logo-icon">✦</div>
-
-          <div>
-            <h2>Deevora</h2>
-            <span>HYGIENE</span>
-          </div>
-        </div>
+        <a href="#home" className="logo" style={{ textDecoration: "none" }}>
+          <img
+            src="/logo.png"
+            alt="Deevora Hygiene Private Limited"
+            className="navbar-logo-img"
+          />
+        </a>
 
         <div className="nav-links">
           <a href="#home">Home</a>
-          <a href="#shop">Shop</a>
+          <a href="#products">Products</a>
           <a href="#categories">Categories</a>
-          <a href="#about">About</a>
+          <a href="#why-us">Why Us</a>
           <a href="#contact">Contact</a>
         </div>
 
@@ -202,9 +276,20 @@ Please contact me regarding this order.`;
               type="text"
               placeholder="Search products..."
               value={search}
+              maxLength={50}
               onChange={(e) => setSearch(e.target.value)}
             />
           </div>
+
+          <a
+            href="https://wa.me/918800570023?text=Hello%20Deevora%20Hygiene%2C%20I%20want%20to%20know%20more%20about%20your%20products."
+            target="_blank"
+            rel="noreferrer"
+            className="navbar-enquiry-btn"
+            title="Chat on WhatsApp"
+          >
+            💬 Send Enquiry
+          </a>
 
           <button
             className="cart-button"
@@ -247,7 +332,7 @@ Please contact me regarding this order.`;
           <div className="hero-buttons">
 
             <a
-              href="#shop"
+              href="#products"
               className="primary-button"
             >
               Shop Products →
@@ -311,7 +396,7 @@ Please contact me regarding this order.`;
           <button
             onClick={() => {
               setCategory("Women Care");
-              const el = document.getElementById("shop");
+              const el = document.getElementById("products") || document.getElementById("shop");
               if (el) el.scrollIntoView({ behavior: "smooth" });
             }}
             className="category-card women"
@@ -333,7 +418,7 @@ Please contact me regarding this order.`;
           <button
             onClick={() => {
               setCategory("Baby Care");
-              const el = document.getElementById("shop");
+              const el = document.getElementById("products") || document.getElementById("shop");
               if (el) el.scrollIntoView({ behavior: "smooth" });
             }}
             className="category-card baby"
@@ -355,7 +440,7 @@ Please contact me regarding this order.`;
           <button
             onClick={() => {
               setCategory("Personal Care");
-              const el = document.getElementById("shop");
+              const el = document.getElementById("products") || document.getElementById("shop");
               if (el) el.scrollIntoView({ behavior: "smooth" });
             }}
             className="category-card personal"
@@ -377,7 +462,7 @@ Please contact me regarding this order.`;
           <button
             onClick={() => {
               setCategory("Period Care");
-              const el = document.getElementById("shop");
+              const el = document.getElementById("products") || document.getElementById("shop");
               if (el) el.scrollIntoView({ behavior: "smooth" });
             }}
             className="category-card period"
@@ -402,7 +487,7 @@ Please contact me regarding this order.`;
 
       {/* ================= PRODUCTS ================= */}
 
-      <section className="shop-section" id="shop">
+      <section className="shop-section" id="products">
 
         <div className="section-heading">
 
@@ -511,7 +596,7 @@ Please contact me regarding this order.`;
                     {Math.round(
                       ((product.oldPrice - product.price) /
                         product.oldPrice) *
-                        100
+                      100
                     )}
                     % OFF
                   </span>
@@ -536,7 +621,7 @@ Please contact me regarding this order.`;
                       addToCart(product)
                     }
                   >
-                    Add to Cart
+                    🛒 Add to Cart
                   </button>
 
                 </div>
@@ -563,7 +648,7 @@ Please contact me regarding this order.`;
 
       {/* ================= WHY DEEVORA ================= */}
 
-      <section className="why-section" id="about">
+      <section className="why-section" id="why-us">
 
         <div className="section-heading">
 
@@ -673,9 +758,11 @@ Please contact me regarding this order.`;
           <input
             type="email"
             placeholder="Enter your Gmail"
+            maxLength={80}
+            required
           />
 
-          <button>
+          <button type="submit">
             Subscribe
           </button>
 
@@ -684,60 +771,230 @@ Please contact me regarding this order.`;
       </section>
 
 
-      {/* ================= FOOTER ================= */}
+      {/* ================= CONTACT SECTION ================= */}
 
-      <footer id="contact">
+      <section className="contact-section" id="contact">
 
-        <div>
+        <div className="contact-wrapper">
 
-          <h2>Deevora</h2>
+          {/* LEFT SIDE */}
 
-          <p>
-            Healthy Women • Happy Families
-          </p>
+          <div className="contact-info">
 
-          <p>
-            A Cleaner Tomorrow
-          </p>
+            <span className="contact-label">
+              GET IN TOUCH
+            </span>
+
+            <h2>
+              We'd Love To
+              <br />
+              <strong>Hear From You.</strong>
+            </h2>
+
+            <p>
+              Have a question about our hygiene products?
+              Need help choosing a product? Send us a message
+              and our team will get back to you.
+            </p>
+
+
+            <div className="contact-details">
+
+              <div className="contact-detail">
+
+                <div className="contact-icon">
+                  ☎
+                </div>
+
+                <div>
+                  <small>CALL US</small>
+                  <strong>+91 8800570023</strong>
+                </div>
+
+              </div>
+
+
+              <div className="contact-detail">
+
+                <div className="contact-icon">
+                  ✉
+                </div>
+
+                <div>
+                  <small>EMAIL US</small>
+                  <strong>info@deevora.com</strong>
+                </div>
+
+              </div>
+
+
+              <div className="contact-detail">
+
+                <div className="contact-icon">
+                  📍
+                </div>
+
+                <div>
+                  <small>OUR LOCATION</small>
+                  <strong>India</strong>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          {/* RIGHT SIDE FORM */}
+
+          <div className="message-card">
+
+            <div className="message-heading">
+
+              <span>SEND A MESSAGE</span>
+
+              <h3>
+                How Can We Help?
+              </h3>
+
+            </div>
+
+
+            <form
+              ref={contactFormRef}
+              onSubmit={handleContactSubmit}
+            >
+
+              <div className="form-row">
+
+                <div className="form-group">
+
+                  <label>
+                    Your Name <span className="field-limit">(Max 50 chars)</span>
+                  </label>
+
+                  <input
+                    type="text"
+                    name="name"
+                    placeholder="Enter your name"
+                    value={contactForm.name}
+                    maxLength={50}
+                    minLength={2}
+                    onChange={(e) =>
+                      setContactForm({ ...contactForm, name: e.target.value })
+                    }
+                    required
+                  />
+
+                </div>
+
+
+                <div className="form-group">
+
+                  <label>
+                    Gmail <span className="field-limit">(Max 80 chars)</span>
+                  </label>
+
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder="Enter your Gmail"
+                    value={contactForm.email}
+                    maxLength={80}
+                    onChange={(e) =>
+                      setContactForm({ ...contactForm, email: e.target.value })
+                    }
+                    required
+                  />
+
+                </div>
+
+              </div>
+
+
+              <div className="form-group">
+
+                <label>
+                  Mobile Number <span className="field-limit">(10 Digits)</span>
+                </label>
+
+                <div className="phone-input-group">
+                  <span className="country-prefix">
+                    <span>🇮🇳</span> +91
+                  </span>
+
+                  <input
+                    type="tel"
+                    name="phone"
+                    placeholder="Enter 10-digit mobile number"
+                    value={contactForm.phone}
+                    maxLength={10}
+                    minLength={10}
+                    pattern="[6-9][0-9]{9}"
+                    title="Please enter a valid 10-digit Indian mobile number starting with 6, 7, 8 or 9"
+                    onChange={(e) => {
+                      const val = e.target.value.replace(/\D/g, "").slice(0, 10);
+                      setContactForm({ ...contactForm, phone: val });
+                    }}
+                    required
+                  />
+                </div>
+
+              </div>
+
+
+              <div className="form-group">
+
+                <label>
+                  Your Query <span className="field-limit">({contactForm.query.length}/500)</span>
+                </label>
+
+                <textarea
+                  name="query"
+                  placeholder="Write your message or product query..."
+                  value={contactForm.query}
+                  maxLength={500}
+                  minLength={5}
+                  onChange={(e) =>
+                    setContactForm({ ...contactForm, query: e.target.value })
+                  }
+                  required
+                ></textarea>
+
+              </div>
+
+
+              <button
+                type="submit"
+                className="send-message-button"
+              >
+
+                Send Message
+
+                <span>
+                  →
+                </span>
+
+              </button>
+
+
+              <p className="form-note">
+                🔒 Your message will be sent securely through WhatsApp / Email.
+              </p>
+
+            </form>
+
+          </div>
 
         </div>
 
-
-        <div>
-
-          <h3>Shop</h3>
-
-          <p>Women Care</p>
-          <p>Baby Care</p>
-          <p>Personal Care</p>
-          <p>Period Care</p>
-
-        </div>
+      </section>
 
 
-        <div>
+      {/* ================= FOOTER COMPONENT ================= */}
 
-          <h3>Company</h3>
-
-          <p>About Us</p>
-          <p>Contact</p>
-          <p>Privacy Policy</p>
-          <p>Terms & Conditions</p>
-
-        </div>
-
-
-        <div>
-
-          <h3>Contact</h3>
-
-          <p>📞 +91 8800570023</p>
-          <p>✉️ info@deevora.com</p>
-          <p>📍 India</p>
-
-        </div>
-
-      </footer>
+      <Footer />
 
 
       {/* ================= PRODUCT MODAL ================= */}
@@ -970,7 +1227,7 @@ Please contact me regarding this order.`;
 
                   <button
                     className="whatsapp-button"
-                    onClick={sendWhatsApp}
+                    onClick={() => sendWhatsApp()}
                   >
                     💬 Order on WhatsApp
                   </button>
@@ -988,7 +1245,7 @@ Please contact me regarding this order.`;
       )}
 
 
-      {/* ================= CHECKOUT ================= */}
+      {/* ================= CHECKOUT MODAL ================= */}
 
       {checkoutOpen && (
 
@@ -1017,34 +1274,68 @@ Please contact me regarding this order.`;
               onSubmit={(e) => {
                 e.preventDefault();
 
-                alert(
-                  "Thank you! Your order/query has been received."
-                );
+                if (checkoutForm.phone.length !== 10) {
+                  alert("Please enter a valid 10-digit Indian mobile number.");
+                  return;
+                }
 
                 setCheckoutOpen(false);
+                sendWhatsApp(checkoutForm);
               }}
             >
 
               <input
                 type="text"
-                placeholder="Full Name"
+                placeholder="Full Name (Max 50 chars)"
+                value={checkoutForm.name}
+                maxLength={50}
+                minLength={2}
+                onChange={(e) =>
+                  setCheckoutForm({ ...checkoutForm, name: e.target.value })
+                }
                 required
               />
 
               <input
                 type="email"
-                placeholder="Gmail Address"
+                placeholder="Gmail Address (e.g. name@gmail.com)"
+                value={checkoutForm.email}
+                maxLength={80}
+                onChange={(e) =>
+                  setCheckoutForm({ ...checkoutForm, email: e.target.value })
+                }
                 required
               />
 
-              <input
-                type="tel"
-                placeholder="Mobile Number"
-                required
-              />
+              <div className="phone-input-group">
+                <span className="country-prefix">
+                  <span>🇮🇳</span> +91
+                </span>
+
+                <input
+                  type="tel"
+                  placeholder="10-digit Mobile Number"
+                  value={checkoutForm.phone}
+                  maxLength={10}
+                  minLength={10}
+                  pattern="[6-9][0-9]{9}"
+                  title="Please enter a valid 10-digit Indian mobile number starting with 6, 7, 8 or 9"
+                  onChange={(e) => {
+                    const val = e.target.value.replace(/\D/g, "").slice(0, 10);
+                    setCheckoutForm({ ...checkoutForm, phone: val });
+                  }}
+                  required
+                />
+              </div>
 
               <textarea
-                placeholder="Your Query / Address"
+                placeholder="Your Delivery Address / Query (Max 500 chars)"
+                value={checkoutForm.query}
+                maxLength={500}
+                minLength={5}
+                onChange={(e) =>
+                  setCheckoutForm({ ...checkoutForm, query: e.target.value })
+                }
                 required
               ></textarea>
 
@@ -1053,26 +1344,22 @@ Please contact me regarding this order.`;
                 type="submit"
                 className="modal-cart"
               >
-                Submit Query
+                Submit & Send to WhatsApp
               </button>
 
             </form>
-
-
-            <button
-              className="whatsapp-button"
-              onClick={() => {
-                setCheckoutOpen(false);
-                sendWhatsApp();
-              }}
-            >
-              💬 Send Order on WhatsApp
-            </button>
 
           </div>
 
         </div>
 
+      )}
+
+      {/* ================= CART TOAST NOTIFICATION ================= */}
+      {toastMessage && (
+        <div className="cart-toast-notification">
+          <span>{toastMessage}</span>
+        </div>
       )}
 
     </div>

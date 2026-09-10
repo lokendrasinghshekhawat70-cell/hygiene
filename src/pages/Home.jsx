@@ -8,7 +8,7 @@ import WhyChooseUs from "../components/WhyChooseUs";
 import Testimonials from "../components/Testimonials";
 import { products, categories } from "../data/products";
 
-import ProductList from "../ProductList";
+import Shop from "../components/Shop";
 
 export default function Home() {
   return (
@@ -16,8 +16,8 @@ export default function Home() {
       {/* 1. 🎬 Video Hero */}
       <Hero />
 
-      {/* 2. 🛍️ Product List Section */}
-      <ProductList />
+      {/* 2. 🛍️ Product Shopping Section with WhatsApp Enquire */}
+      <Shop />
 
       {/* 3. 📂 Categories (4 Core Categories) */}
       <section className="categories-section" id="categories">

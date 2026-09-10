@@ -1,0 +1,254 @@
+/* =====================================
+   SKYBLUE NAVBAR
+===================================== */
+
+.navbar,
+.skyblue-navbar {
+  width: 100%;
+  height: 86px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 5%;
+
+  background: linear-gradient(
+    135deg,
+    #0284c7,
+    #0ea5e9,
+    #38bdf8
+  );
+
+  box-sizing: border-box;
+
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  box-shadow: 0 4px 20px rgba(2, 132, 199, 0.25);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+}
+
+
+/* Logo */
+
+.logo-box {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  background: #ffffff;
+  padding: 5px 14px;
+  border-radius: 12px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.25s ease;
+}
+
+.logo-box:hover {
+  transform: scale(1.02);
+}
+
+.logo-box img {
+  width: 180px;
+  max-height: 52px;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
+
+
+/* Navigation */
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.nav-links a {
+  color: #ffffff;
+
+  text-decoration: none;
+
+  font-size: 15px;
+  font-weight: 700;
+
+  transition: 0.25s ease;
+  position: relative;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.nav-links a:hover {
+  color: #f0f9ff;
+  transform: translateY(-1px);
+}
+
+
+/* Actions Box */
+
+.navbar-actions-box {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.navbar .search-box {
+  width: 190px;
+  height: 40px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 25px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 0 13px;
+  background: rgba(255, 255, 255, 0.92);
+  color: #0c4a6e;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.navbar .search-box input {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 13px;
+  color: #0c4a6e;
+  font-weight: 500;
+}
+
+.navbar .search-box input::placeholder {
+  color: #64748b;
+}
+
+.navbar .cart-button {
+  position: relative;
+  border: none;
+  background: #0369a1;
+  color: white;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  font-size: 17px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 3px 10px rgba(3, 105, 161, 0.3);
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.navbar .cart-button:hover {
+  background: #075985;
+  transform: scale(1.05);
+}
+
+.navbar .cart-button span {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #e21b91;
+  color: white;
+  font-size: 11px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid white;
+}
+
+
+/* Enquiry Button */
+
+.enquiry-btn {
+  text-decoration: none;
+
+  background: linear-gradient(
+    135deg,
+    #10b981,
+    #059669
+  );
+
+  color: white;
+
+  padding: 11px 20px;
+
+  border-radius: 30px;
+
+  font-size: 14px;
+  font-weight: 800;
+
+  transition: 0.25s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.enquiry-btn:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(
+    135deg,
+    #059669,
+    #047857
+  );
+  box-shadow: 0 6px 18px rgba(16, 185, 129, 0.45);
+}
+
+
+/* Tablet */
+
+@media (max-width: 1000px) {
+  .nav-links {
+    gap: 16px;
+  }
+
+  .logo-box img {
+    width: 150px;
+  }
+
+  .enquiry-btn {
+    padding: 9px 14px;
+    font-size: 13px;
+  }
+}
+
+
+/* Mobile */
+
+@media (max-width: 750px) {
+  .navbar,
+  .skyblue-navbar {
+    height: auto;
+    padding: 12px 18px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .nav-links {
+    width: 100%;
+    order: 3;
+    justify-content: center;
+    gap: 16px;
+    padding-top: 4px;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  .nav-links a {
+    font-size: 13px;
+  }
+
+  .enquiry-btn {
+    font-size: 12px;
+    padding: 8px 12px;
+  }
+
+  .navbar .search-box {
+    display: none;
+  }
+}
